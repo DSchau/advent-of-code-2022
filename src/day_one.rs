@@ -1,5 +1,4 @@
 use regex::Regex;
-use std::io::{stdout, Write};
 
 pub fn sanitize_input(input: &str) -> Vec<Vec<i32>> {
     let binding = Regex::new(r"\n").unwrap();
