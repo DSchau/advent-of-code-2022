@@ -7,7 +7,6 @@ pub fn sanitize_input(input: &str) -> Vec<Vec<i32>> {
 
     let mut sub_collection: Vec<i32> = Vec::new();
 
-    // .. there has to be an easier way to do this right?
     loop {
         match split.next() {
             Some(part) => {
