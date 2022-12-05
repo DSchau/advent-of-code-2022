@@ -42,8 +42,11 @@ pub fn get_rucksam_sum_with_triples(input: Lines) -> i32 {
   let mut clone = input.clone();
   let mut matches: Vec<char> = Vec::new();
 
+  // I wanted to use the .chunks method, but I couldn't figure out
+  // how to take Lines type and get a Vector of strings to use it on
   while let (Some(line1), Some(line2), Some(line3)) = (clone.next(), clone.next(), clone.next()) {
     for ch in line1.chars() {
+      // inefficient. Oh well, YOLO
       if line2.contains(ch) && line3.contains(ch) {
         matches.push(ch);
         break;
