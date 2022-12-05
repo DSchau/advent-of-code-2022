@@ -1,9 +1,24 @@
 use std::str::Lines;
 
-pub fn day_three(input: Lines) -> i32 {
-    let lower: String = "abcdefghijklmnopqrstuvwxyz".to_string();
-    let upper: String = lower.to_ascii_uppercase();
+pub fn get_score(ch: char) -> i32 {
+  let lower: String = "abcdefghijklmnopqrstuvwxyz".to_string();
+  let upper: String = lower.to_ascii_uppercase();
 
+  let lower_match = lower.find(ch).unwrap_or(0) as i32;
+  let upper_match = upper.find(ch).unwrap_or(0) as i32;
+
+  let mut score = 0;
+
+  if lower_match > 0 {
+    score = lower_match + 1;
+  } else if upper_match > 0 {
+    score = lower.len() as i32 + 1 + upper_match;
+  }
+
+  score
+}
+
+pub fn get_rucksack_sum(input: Lines) -> i32 {
     let mut matches: Vec<char> = Vec::new();
 
     for line in input {
@@ -19,20 +34,25 @@ pub fn day_three(input: Lines) -> i32 {
         }
     }
 
-    let mut sum: i32 = 0;
+    matches.iter()
+      .fold(0, |acc, ch| acc + get_score(*ch))
+}
 
-    for char in matches {
-        let lower_match = lower.find(char).unwrap_or(0) as i32;
-        let upper_match = upper.find(char).unwrap_or(0) as i32;
+pub fn get_rucksam_sum_with_triples(input: Lines) -> i32 {
+  let mut clone = input.clone();
+  let mut matches: Vec<char> = Vec::new();
 
-        if lower_match > 0 {
-            sum = sum + (lower_match + 1);
-        } else if upper_match > 0 {
-            sum = sum + (lower.len() as i32 + 1 + upper_match);
-        }
+  while let (Some(line1), Some(line2), Some(line3)) = (clone.next(), clone.next(), clone.next()) {
+    for ch in line1.chars() {
+      if line2.contains(ch) && line3.contains(ch) {
+        matches.push(ch);
+        break;
+      }
     }
+  }
 
-    sum
+  matches.iter()
+    .fold(0, |acc, ch| acc + get_score(*ch))
 }
 
 #[cfg(test)]
@@ -46,13 +66,27 @@ mod tests {
     fn test_base_case() {
         let input = utils::read_test_file("day_three", "sample.txt");
 
-        assert_eq!(day_three(input.lines()), 157);
+        assert_eq!(get_rucksack_sum(input.lines()), 157);
     }
 
     #[test]
     fn test_part_one() {
         let input = utils::read_test_file("day_three", "puzzle.txt");
 
-        assert_eq!(day_three(input.lines()), 7889);
+        assert_eq!(get_rucksack_sum(input.lines()), 7889);
+    }
+
+    #[test]
+    fn test_part_two_simple() {
+        let input = utils::read_test_file("day_three", "sample.txt");
+
+        assert_eq!(get_rucksam_sum_with_triples(input.lines()), 70);
+    }
+
+    #[test]
+    fn test_part_two() {
+        let input = utils::read_test_file("day_three", "puzzle.txt");
+
+        assert_eq!(get_rucksam_sum_with_triples(input.lines()), 2825);
     }
 }
