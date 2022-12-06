@@ -1,3 +1,4 @@
+mod day_five;
 mod day_four;
 mod day_one;
 mod day_three;
@@ -6,5 +7,5 @@ mod day_two;
 mod utils;
 
 fn main() {
-    day_one::get_largest_character("");
+    println!("This doesn't really do much. Run cargo test, instead!");
 }
