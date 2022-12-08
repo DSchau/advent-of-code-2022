@@ -6,8 +6,6 @@ pub fn is_unique(input: String) -> bool {
     clone.sort();
     clone.dedup();
 
-    println!("{:?}{:?}", collection, clone);
-
     clone.len() == collection.len()
 }
 
