@@ -106,9 +106,7 @@ pub fn day_five(input: Input, strategy: Strategy) -> Vec<Vec<String>> {
                 }
             }
             Strategy::PartTwo => {
-                let value = output[from]
-                    .drain(0..count)
-                    .collect::<Vec<String>>();
+                let value = output[from].drain(0..count).collect::<Vec<String>>();
 
                 // output[to].push(value[0].to_string());
                 output[to].splice(0..0, value);
