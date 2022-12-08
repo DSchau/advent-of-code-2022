@@ -4,6 +4,7 @@ mod day_one;
 mod day_six;
 mod day_three;
 mod day_two;
+mod day_seven;
 
 mod utils;
 
